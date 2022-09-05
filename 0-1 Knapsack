@@ -1,1 +1,58 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll               long long
+#define ivec(x) for(auto &i:x) cin>>i;
+#define ovec(x) for(auto &i:x) cout<<i<<" "; cout<<endl;
+
+int dp[102][1002];
+auto x = memset(dp, -1, sizeof(dp));
+
+int Knapsack(vector<int> value,vector<int> weight,int W, int n){
+
+    if(n==0 or W==0)
+        return 0;
+
+    if(dp[n][W]!=-1){
+        return dp[n][W];
+    }
+
+    if(weight[n-1]<=W){
+
+        return dp[n][W]=max((value[n-1]+Knapsack(value,weight,W-weight[n-1],n-1)),Knapsack(value,weight,W,n-1));
+    }
+
+    else if(weight[n-1]>W){
+        return dp[n][W]=Knapsack(value,weight,W,n-1);
+    }
+}
+
+
+void solve(){
+    int n,W;
+    cin>>n>>W;
+   std::vector<int> value(n);
+   std::vector<int> weight(n);
+   ivec(value);
+   ivec(weight);
+
+   cout<<Knapsack(value,weight,W,n)<<endl;
+
+
+}
+int32_t main(){
+       ios_base::sync_with_stdio(false);
+          cin.tie(0);cout.tie(0);
+
+       #ifndef ONLINE_JUDGE
+      freopen("input.txt","r",stdin);
+      freopen("output.txt","w",stdout);
+      #endif
+     int t=1;
+     cin>>t;
+     while(t--){
+       solve();
+   }
+
+return 0;
+}
 
